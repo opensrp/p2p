@@ -14,7 +14,7 @@ versions.ktlint = '0.41.0'
 versions.mockk = '1.13.8'
 versions.robolectric = '4.10.3'
 versions.timber = '4.7.1'
-versions.room = '2.3.0'
+versions.room = '2.4.0'
 versions.spotless = '5.11.0'
 ext.versions = versions
 

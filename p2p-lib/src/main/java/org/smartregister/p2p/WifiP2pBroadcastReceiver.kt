@@ -68,6 +68,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Network
+import android.net.NetworkInfo
 import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pGroup
 import android.net.wifi.p2p.WifiP2pInfo
@@ -87,10 +89,17 @@ class WifiP2pBroadcastReceiver(
     when (intent.action) {
       WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION -> {
         Timber.e("Wifi p2p Connection changed action")
-        val p2pGroupInfo =
-          intent.getParcelableExtra<WifiP2pGroup>(WifiP2pManager.EXTRA_WIFI_P2P_GROUP)
-        val wifiP2pInfo = intent.getParcelableExtra<WifiP2pInfo>(WifiP2pManager.EXTRA_WIFI_P2P_INFO)
-        listener.onConnectionInfoAvailable(wifiP2pInfo!!, p2pGroupInfo)
+
+        val networkInfo: NetworkInfo? = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO) as? NetworkInfo
+        val p2pGroupInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_GROUP) as? WifiP2pGroup
+        if (networkInfo?.isConnected == true){
+          // We are connected with the other device, request connection
+          // info to find group owner IP
+
+          manager.requestConnectionInfo(channel) { wifiP2pInfo ->
+            listener.onConnectionInfoAvailable(wifiP2pInfo, p2pGroupInfo)
+          }
+        }
       }
       WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION ->
         handleDiscoveryChanged(intent.getIntExtra(WifiP2pManager.EXTRA_DISCOVERY_STATE, -1))

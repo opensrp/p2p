@@ -24,7 +24,7 @@ class SampleMainActivity : AppCompatActivity() {
             username = "demo",
             object: SenderTransferDao {
                 override fun getP2PDataTypes(): TreeSet<DataType> {
-                    return TreeSet<DataType>()
+                    return TreeSet<DataType>(listOf(DataType(name = "Patient", DataType.Filetype.JSON, 0)))
                 }
 
                 override fun getTotalRecordCount(highestRecordIdMap: HashMap<String, Long>): RecordCount {
@@ -41,7 +41,7 @@ class SampleMainActivity : AppCompatActivity() {
                 }
             }, object: ReceiverTransferDao {
                 override fun getP2PDataTypes(): TreeSet<DataType> {
-                    return TreeSet<DataType>()
+                    return TreeSet<DataType>(listOf(DataType(name = "Patient", DataType.Filetype.JSON, 0)))
                 }
 
                 override fun receiveJson(type: DataType, jsonArray: JSONArray): Long {

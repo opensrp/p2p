@@ -816,7 +816,7 @@ class WifiDirectDataSharingStrategy : DataSharingStrategy, P2PManagerListener {
           null
         }
       } catch (ex: SocketException) {
-        Timber.e("Receiving manfiest failed", ex)
+        Timber.e("Receiving manifest failed", ex)
         operationListener.onFailure(device, ex)
         null
       }
@@ -957,6 +957,7 @@ class WifiDirectDataSharingStrategy : DataSharingStrategy, P2PManagerListener {
               ) {
 
                 Timber.e("onConnectionInfoAvailable() WIFIp2p Group is $wifiP2pGroup")
+                Timber.e("onConnectionInfoAvailable() WIFIp2p Info is $info")
                 Timber.e("onConnectionInfoAvailable() Paired: $paired")
                 Timber.e(
                   "onConnectionInfoAvailable() Requested disconnection: $requestedDisconnection"
